@@ -6,7 +6,6 @@ setup(
     description="Workarounds for using tox with no internet connection",
     url='https://github.com/lulupac/tox-no-internet',
     version='0.1.0',
-
     author='lulupac',
     author_email='lulupac07@gmail.com',
 
@@ -15,7 +14,6 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: Implementation :: CPython',
     ],
 
