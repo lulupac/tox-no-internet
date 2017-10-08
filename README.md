@@ -18,9 +18,8 @@ First, set the `TOX_PLUGIN_FIND_LINKS` environment variable to the local directo
 
 Then the plugin will do the following for you:
 * set the environment variable `VIRTUALENV_NO_DOWNLOAD`,
-* set the environment variable `PIP_NO_INDEX` to prevent pip from reaching out to pypi,
-* set the environment variable `PIP_FIND_LINKS` to the local directory you specified in `TOX_PLUGIN_FIND_LINKS`,
-* update the `disutils` configuration file for each testenv created by tox to tell `easy_install` to find packages in the local directory you specified.  
+* create a `pip.conf` file for each testenv created with *no-index* option set and *find-links* option to point to the local directory you specified in `TOX_PLUGIN_FIND_LINKS`,
+* create a `disutils.cfg` file for each testenv created by tox to tell `easy_install` to find packages in the local directory you specified.  
 
 
 ## Installation
