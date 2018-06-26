@@ -41,22 +41,25 @@ def _set_plugin_environ():
 
 @hookimpl(tryfirst=True)
 def tox_testenv_create(venv, action):
-
-    with _set_plugin_environ():
-        tox.venv.tox_testenv_create(venv, action)
-
     find_links_url = os.environ.get('TOX_PLUGIN_FIND_LINKS')
+    if find_links_url is not None:
+        with _set_plugin_environ():
+            tox.venv.tox_testenv_create(venv, action)
 
-    # create pip.conf file in test virtualenv
-    pip_conf_path = os.path.join(str(venv.path), "pip.conf")
-    with open(pip_conf_path, "w") as fd:
-        fd.write(PIP_CONF_FILE.format(find_links_url))
+        # create pip.conf file in test virtualenv
+        pip_conf_path = os.path.join(str(venv.path), "pip.conf")
+        with open(pip_conf_path, "w") as fd:
+            fd.write(PIP_CONF_FILE.format(find_links_url))
 
-    # create distutils.cfg file in test virtualenv
-    path_pattern = os.path.join(str(venv.path), "lib/python*/distutils/distutils.cfg")
-    distutils_cfg_path = glob.glob(path_pattern).pop()
-    with open(distutils_cfg_path, "w") as fd:
-        fd.write(DISTUTILS_CFG_FILE.format(find_links_url))
+        # create distutils.cfg file in test virtualenv
+        path_pattern = os.path.join(str(venv.path), "lib/python*/distutils/distutils.cfg")
+        distutils_cfg_path = glob.glob(path_pattern).pop()
+        with open(distutils_cfg_path, "w") as fd:
+            fd.write(DISTUTILS_CFG_FILE.format(find_links_url))
 
-    # return non-None to indicate we handled the virtualenv creation
-    return True
+        # return non-None to indicate we handled the virtualenv creation
+        return True
+
+    else:
+        # Return None to indicate we didn't do anything
+        return None
